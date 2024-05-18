@@ -1,17 +1,17 @@
 import asyncio
-import os
+import sys
 from pathlib import Path
-
 
 import pygame
 
+# pygame.init()
 pygame.font.init()
 pygame.mixer.init()
 
 CURRENT_FOLDER = Path(__file__).parent
 ROOT_FOLDER = CURRENT_FOLDER.parent
 
-SCREEN_SIZE = (900, 500)  # (WIDTH, HEIGHT)
+SCREEN_SIZE = (1280, 720)  # (WIDTH, HEIGHT)
 WINDOW = pygame.display.set_mode(SCREEN_SIZE)
 pygame.display.set_caption('First Game')
 
@@ -39,17 +39,16 @@ YELLOW_HIT = pygame.USEREVENT + 1
 RED_HIT = pygame.USEREVENT + 2
 
 
-YELLOW_SPACESHIP_IMAGE = pygame.image.load(ROOT_FOLDER / CURRENT_FOLDER / 'Assets/spaceship_yellow.png')
+YELLOW_SPACESHIP_IMAGE = pygame.image.load(ROOT_FOLDER / CURRENT_FOLDER / 'Assets' / 'spaceship_yellow.png')
 YELLOW_SPACESHIP = pygame.transform.rotate(
     pygame.transform.scale(YELLOW_SPACESHIP_IMAGE, (SPACESHIP_WIDTH, SPACESHIP_HEIGHT)), 90)
 
-# CAT_PATH = ROOT_FOLDER / '0_static' / DEFAULT_CAT_FILE_NAME).absolute()
 
 RED_SPACESHIP_IMAGE = pygame.image.load(ROOT_FOLDER / CURRENT_FOLDER / 'Assets' / 'spaceship_red.png')
 RED_SPACESHIP = pygame.transform.rotate(
     pygame.transform.scale(RED_SPACESHIP_IMAGE, (SPACESHIP_WIDTH, SPACESHIP_HEIGHT)), 270)
 
-SPACE = pygame.transform.scale(pygame.image.load(os.path.join('Assets', 'space.png')), SCREEN_SIZE)
+SPACE = pygame.transform.scale(pygame.image.load(CURRENT_FOLDER / 'Assets' / 'space.png'), SCREEN_SIZE)
 
 
 def draw_window(red, yellow, red_bullets, yellow_bullets, red_health, yellow_health):
@@ -122,8 +121,8 @@ def draw_winner(text):
 async def main():
     pygame.init()
 
-    red = pygame.Rect(700, 300, SPACESHIP_WIDTH, SPACESHIP_HEIGHT)
-    yellow = pygame.Rect(100, 300, SPACESHIP_WIDTH, SPACESHIP_HEIGHT)
+    red = pygame.Rect(960, 360, SPACESHIP_WIDTH, SPACESHIP_HEIGHT)
+    yellow = pygame.Rect(320, 360, SPACESHIP_WIDTH, SPACESHIP_HEIGHT)
 
     red_bullets = []
     yellow_bullets = []
@@ -145,6 +144,10 @@ async def main():
                     bullet = pygame.Rect(yellow.x + yellow.width, yellow.y + yellow.height // 2 - 2, 10, 5)
                     yellow_bullets.append(bullet)
                     BULLET_FIRE_SOUND.play()
+
+                if event.key == pygame.K_ESCAPE:
+                    pygame.quit()
+                    sys.exit()
 
                 if event.key == pygame.K_RCTRL and len(red_bullets) < MAX_BULLETS:
                     bullet = pygame.Rect(red.x, red.y + red.height // 2 - 2, 10, 5)

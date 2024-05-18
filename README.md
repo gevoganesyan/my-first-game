@@ -1,6 +1,11 @@
-# PYGAME+PYGBAG template
+# Spaceship Attack
 
-A working template to start coding. Just a colored screen and some infrastructure.
+# Movement configs:
+### 1 player: W A S D  -  LCtrl for shooting
+### 2 player: Up Left Down Right - RCtrl for shooting
+
+
+## A working template to start coding. Just a colored screen and some infrastructure.
 
 ### deploy virtual environment
 
@@ -11,7 +16,7 @@ python -m venv venv
 Activation for **windows**:
 
 ```bash
-venv/scripts/activate
+game/venv/scripts/activate
 ```
 
 ### install libraries
